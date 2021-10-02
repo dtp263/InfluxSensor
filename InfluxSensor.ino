@@ -7,7 +7,7 @@
 #include "utils/wifimanager.h"
 #include <ArduinoOTA.h>
 #include <vector>
-#include "../secrets_example.h"
+#include "secrets_example.h"
 
 using std::vector;
 
