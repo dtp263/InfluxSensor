@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 sudo apt-get install bzip2
-yes | sudo apt install python-pip
+yes | sudo apt install python-pip python5.2
 pip install pyserial
 pip install --upgrade pip
 
