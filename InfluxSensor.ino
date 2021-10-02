@@ -7,9 +7,9 @@
 #include "utils/wifimanager.h"
 #include <ArduinoOTA.h>
 #include <vector>
-#include "secrets.h"
+#include "../secrets_example.h"
 
-using std::vector; 
+using std::vector;
 
 // OTA ota;
 CustomWifiManager wfm;
@@ -18,10 +18,11 @@ Influx influx;
 // const char *ssid = STASSID;
 // const char *password = STAPSK;
 
-const int AirValue = 750;   //you need to replace this value with Value_1
+const int AirValue = 750; //you need to replace this value with Value_1
 const int WaterValue = 325;
 
-int getSoilMoistureValue() {
+int getSoilMoistureValue()
+{
   return map(analogRead(A0), WaterValue, AirValue, 0, 100);
 }
 
@@ -30,7 +31,7 @@ void setup()
   // Add params to wifiManager.
   wfm.add_param("node_id", "Node ID", "basil-1", 60);
   wfm.add_param("influx_bucket", "Influx Bucket", "bucket-2", 60);
-  wfm.add_param("influx_token", "Influx Token", "S8uyv99fnXFdNlt0JaX6IiECKjydVKQS-hawqDDBtG-pjYXOzvYtAk0kg66EsRAgpAOJ95jG2I6KPd_G9bpMuw==", 89);
+  wfm.add_param("influx_token", "Influx Token", "S8u.....", 89);
   wfm.add_param("influx_url", "Influx Url", "https://us-central1-1.gcp.cloud2.influxdata.com", 89);
   wfm.add_param("influx_org", "Influx Org", "olin.davis20@gmail.com", 60);
 
@@ -39,19 +40,16 @@ void setup()
   // Add sensors to Influx
   Sensor soilMoisture("soil_moisture", "wetness", getSoilMoistureValue);
 
-
   Serial.println("NODE_ID");
   Serial.println(wfm.getParamValue("node_id"));
 
   // Add tags
   soilMoisture.addTag("node_id", (String)wfm.getParamValue("node_id"));
 
-  
   influx.add_sensor(soilMoisture);
 
-
   // ota.setup_ota(ssid, password);
-  
+
   influx.setup_influx("ESP8266");
 }
 
