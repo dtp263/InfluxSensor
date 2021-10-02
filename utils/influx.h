@@ -3,8 +3,7 @@
 #include <string.h>
 #include "sensor.h"
 #include <ESP8266WiFiMulti.h>
-#include "../secrets.h"
-
+#include "../secrets_example.h"
 
 #define DEVICE "ESP8266"
 // // InfluxDB v2 server url, e.g. https://eu-central-1-1.aws.cloud2.influxdata.com (Use: InfluxDB UI -> Load Data -> Client Libraries)
@@ -48,7 +47,8 @@ public:
 
   void setup_influx(String device)
   {
-    for (int i; i < _sensors.size(); i++) {
+    for (int i; i < _sensors.size(); i++)
+    {
       _sensors[i].addTag("device", device);
     }
 
@@ -62,17 +62,20 @@ public:
     timeSync(TZ_INFO, "pool.ntp.org", "time.nis.gov");
 
     // Check server connection
-    if (client.validateConnection()) {
+    if (client.validateConnection())
+    {
       Serial.print("Connected to InfluxDB: ");
       Serial.println(client.getServerUrl());
-    } else {
+    }
+    else
+    {
       Serial.print("InfluxDB connection failed: ");
       Serial.println(client.getLastErrorMessage());
     }
 
     // WriteOptions options;
 
-    // this is +1 because we are adding the wifi strength in after the fact atm.  
+    // this is +1 because we are adding the wifi strength in after the fact atm.
     // client.setWriteOptions(options.batchSize(3));
   }
 
@@ -86,7 +89,8 @@ public:
     // Clear fields for reusing the point. Tags will remain untouched
     sensor.clearFields();
 
-    for (int i; i < _sensors.size(); i++) {
+    for (int i; i < _sensors.size(); i++)
+    {
       _sensors[i].clearFields();
     }
 
@@ -94,7 +98,8 @@ public:
     // Report RSSI of currently connected network
     sensor.addField("rssi", WiFi.RSSI());
 
-    for (int i; i < _sensors.size(); i++) {
+    for (int i; i < _sensors.size(); i++)
+    {
       _sensors[i].addField(_sensors[i].getUnit(), _sensors[i].getValue());
     }
 
@@ -102,23 +107,26 @@ public:
     Serial.print("Writing: ");
     Serial.println(sensor.toLineProtocol());
 
-    for (int i; i < _sensors.size(); i++) {
+    for (int i; i < _sensors.size(); i++)
+    {
       Serial.print("Writing: ");
       Serial.println(_sensors[i].getPoint().toLineProtocol());
     }
 
     // If no Wifi signal, try to reconnect it
-    if ((WiFi.RSSI() == 0) && (wifiMulti.run() != WL_CONNECTED)) {
+    if ((WiFi.RSSI() == 0) && (wifiMulti.run() != WL_CONNECTED))
+    {
       Serial.println("Wifi connection lost");
     }
 
-    for (int i; i < _sensors.size(); i++) {
+    for (int i; i < _sensors.size(); i++)
+    {
       client.writePoint(_sensors[i].getPointRef());
     }
 
-
     // Write point
-    if (!client.writePoint(sensor)) {
+    if (!client.writePoint(sensor))
+    {
       Serial.print("InfluxDB write failed: ");
       Serial.println(client.getLastErrorMessage());
     }
