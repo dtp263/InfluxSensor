@@ -7,8 +7,9 @@ pip install --upgrade pip
 
 wget -O arduino-cli-linux64 https://github.com/arduino/arduino-cli/releases/download/0.19.2/arduino-cli_0.19.2_Linux_64bit.tar.gz | tar -xz
 
-sudo mv arduino-cli-linux64 /usr/local/share/arduino-cli
-sudo ln -s /usr/local/share/arduino-cli /usr/local/bin/arduino-cli
+sudo mv arduino-cli-linux64 /usr/local/bin/arduino-cli
+sudo chmod +x /usr/local/bin/arduino-cli
+# sudo ln -s /usr/local/share/arduino-cli /usr/local/bin/arduino-cli
 
 printf "board_manager:
   additional_urls:
