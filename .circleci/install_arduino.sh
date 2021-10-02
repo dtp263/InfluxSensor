@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 
 sudo apt-get install bzip2
-yes | sudo apt install python-pip python5.2
+yes | sudo apt install python-pip
 pip install pyserial
 pip install --upgrade pip
 
-wget -O arduino-cli-linux64.tar.bz2 https://github.com/arduino/arduino-cli/releases/download/0.3.3-alpha.preview/arduino-cli-0.3.3-alpha.preview-linux64.tar.bz2
-bunzip2 arduino-cli-linux64.tar.bz2
-tar xvf arduino-cli-linux64.tar
+wget -O arduino-cli-linux64 https://github.com/arduino/arduino-cli/releases/download/0.19.2/arduino-cli_0.19.2_Linux_64bit.tar.gz | tar -xz
 
 sudo mv arduino-cli-0.3.3-alpha.preview-linux64 /usr/local/share/arduino-cli
 sudo ln -s /usr/local/share/arduino-cli /usr/local/bin/arduino-cli
