@@ -22,5 +22,6 @@ arduino-cli core update-index
 arduino-cli core install esp32:esp32
 arduino-cli core install esp8266:esp8266
 
+arduino-cli lib install ArduinoJson
 arduino-cli lib install WiFiManager
 arduino-cli lib install "ESP8266 Influxdb"
